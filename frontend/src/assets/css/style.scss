@@ -44,6 +44,9 @@ header {
             color: $text-color;
             font-weight: 500;
             margin-left: 20px;
+            &:hover{
+                color: $primary-color;
+            }
         }
 
         .logo {
@@ -80,10 +83,18 @@ footer {
     }
 }
 
+.small {
+    padding: 10px 15px !important;
+}
+
+.large {
+    padding: 15px 20px !important;
+}
+
 .btn-primary {
     background-color: $primary-color !important;
     border: 1px solid $primary-color !important;
-    padding: 15px 20px !important;
+
     font-size: 1em !important;
     font-weight: 500 !important;
     text-transform: uppercase;
@@ -98,7 +109,7 @@ footer {
 .btn-secondary {
     background-color: $secondry-color !important;
     border: 1px solid $secondry-color !important;
-    padding: 15px 20px !important;
+
     font-size: 1em !important;
     font-weight: 500 !important;
     text-transform: uppercase;
@@ -212,9 +223,73 @@ footer {
     }
 }
 
-.section-4{
-    .card{
+.section-4 {
+    .card {
         border-radius: 40px;
         margin-bottom: 20px;
+    }
+}
+
+.section-5 {
+    .swiper {
+        padding: 25px 25px 50px 25px;
+
+        .swiper-pagination-bullet-active {
+            background-color: $secondry-color;
+        }
+    }
+
+    .card {
+        border-radius: 40px;
+
+        .card-body {
+            .rating {
+                color: $secondry-color;
+            }
+
+            .content {
+                p {
+                    font-size: 1em;
+                }
+            }
+
+            .meta {
+                img {
+                    border-radius: 50%;
+                }
+            }
+
+            .name {
+                font-size: 1.3em;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+.section-6 {
+    .card {
+        border-radius: 40px;
+
+        img {
+            border-top-left-radius: 40px;
+            border-top-right-radius: 40px;
+        }
+
+        .card-body {
+            a.title {
+                font-size: 1.4em;
+
+            }
+        }
+    }
+}
+
+a {
+    text-decoration: none !important;
+    color: $text-color;
+
+    &:hover {
+        color: $primary-color;
     }
 }
