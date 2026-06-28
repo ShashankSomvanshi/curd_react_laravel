@@ -279,6 +279,7 @@ footer {
         .card-body {
             a.title {
                 font-size: 1.4em;
+                color: $dark-background;
 
             }
         }
@@ -333,6 +334,17 @@ a {
             color: $light-background;
             font-size: 1.3em;
             
+        }
+    }
+}
+
+.section-9{
+    .card{
+        border-radius: 40px;
+        .card-body{
+            a{
+                color: $text-color;
+            }
         }
     }
 }

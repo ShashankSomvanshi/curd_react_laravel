@@ -28,7 +28,7 @@ function Header() {
               <Nav.Link href="/blogs" className="nav-link">
                 Blogs
               </Nav.Link>
-              <Nav.Link href="#pricing" className="nav-link">
+              <Nav.Link href="/contactus" className="nav-link">
                 Contact Us
               </Nav.Link>
             </Nav>
