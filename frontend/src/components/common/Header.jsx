@@ -19,7 +19,7 @@ function Header() {
               <Nav.Link href="/about" className="nav-link">
                 About Us
               </Nav.Link>
-              <Nav.Link href="#pricing" className="nav-link">
+              <Nav.Link href="/services" className="nav-link">
                 Services
               </Nav.Link>
               <Nav.Link href="#pricing" className="nav-link">
