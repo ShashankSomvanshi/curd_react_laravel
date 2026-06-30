@@ -34,6 +34,13 @@ class TempImageController extends Controller
 
             $image->move(public_path('uploads/temp'),$imageName);
 
+            $sourcePath = public_path('uploads/temp/'.$imageName);
+            $desPath = public_path('uploads/temp/thumb/'.$imageName);
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($sourcePath);
+            $image->cover(300, 300);
+            $image->toJpeg(90)->save($desPath);
+
             return response()->json([
                 'status'=>true,
                 'data'=>$model,
