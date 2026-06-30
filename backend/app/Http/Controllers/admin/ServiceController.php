@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Service;
+use App\Models\TempImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class ServiceController extends Controller
 {
@@ -21,7 +24,7 @@ class ServiceController extends Controller
         ]);
     }
 
-   
+
     /**
      * Store a newly created resource in storage.
      */
@@ -56,9 +59,21 @@ class ServiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Service $service)
+    public function show($id)
     {
-        //
+        $service = Service::find($id);
+
+        if($service == null){
+            return response()->json([
+                'status'=> false,
+                'message' => 'Service not found'
+            ]);
+        }
+
+        return response()->json([
+            'status'=> true,
+            'data' => $service
+        ]);
     }
 
     /**
@@ -72,16 +87,93 @@ class ServiceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Service $service)
+    public function update(Request $request, $id)
     {
         //
+        $service = Service::find($id);
+
+
+        if($service === null){
+            return response()->json([
+                'status'=> false,
+                'message' => 'Service not found'
+            ]);
+        }
+        $validator = Validator::make($request->all(),[
+            'title'=>'required',
+            'slug'=>'required|unique:services,slug,'.$id.',id'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'status'=>false,
+                'errors'=>$validator->errors()
+            ]);
+        }
+
+        $service->title = $request->title;
+        $service->slug = Str::slug($request->slug);
+        $service->short_desc = $request->short_desc;
+        $service->content = $request->content;
+        $service->status = $request->status;
+        $service->save();
+
+        if($request->imageId > 0){
+                $tempImage = TempImage::find($request->imageId);
+                if($tempImage != null){
+                    $extArray = explode('.',$tempImage->name);
+                    $ext = last($extArray);
+
+                    $fileName = strtotime('now').$service->id.'.'.$ext;
+
+                    //Create Small Thumbnail Here
+                    $sourcePath = public_path('uploads/temp/'.$tempImage->name);
+                    $desPath = public_path('uploads/services/small/'.$fileName);
+                    $manager = new ImageManager(new Driver());
+                    $image = $manager->read($sourcePath);
+                    $image->cover(300, 300);
+                    $image->toJpeg(90)->save($desPath);
+
+                    //Create Large Thumbnail Here
+                    $sourcePath = public_path('uploads/temp/'.$tempImage->name);
+                    $desPath = public_path('uploads/services/small/'.$fileName);
+                    $manager = new ImageManager(new Driver());
+                    $image = $manager->read($sourcePath);
+                    $image->scale(1200);
+                    $image->toJpeg(90)->save($desPath);
+
+
+                }
+        }
+
+        return response()->json([
+            'status'=>true,
+            'message'=>'Service Updated successfully'
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Service $service)
+    public function destroy($id)
     {
-        //
+        $service = Service::find($id);
+
+        if($service == null){
+            return response()->json([
+                'status'=> false,
+                'message' => 'Service not found'
+            ]);
+        }
+
+        $service->delete();
+
+        return response()->json([
+            'status'=> true,
+            'message' => 'Service Delete Successfully'
+        ]);
+
+
+
     }
 }
