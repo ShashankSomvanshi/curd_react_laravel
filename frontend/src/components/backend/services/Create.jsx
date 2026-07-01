@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react'
 import Header from '../../common/Header'
 import Footer from '../../common/Footer'
 import Sidebar from '../../common/Sidebar'
-import { Link, useNavigate}  from 'react-router-dom'
+import { data, Link, useNavigate}  from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { apiUrl, token } from '../../common/Http'
 import { toast } from 'react-toastify'
@@ -13,6 +13,8 @@ const Create = ({placeholder}) => {
 
   const editor = useRef(null);
   const [content,setContent] = useState();
+  const [isDisabled,setIsDisabled] = useState(false);
+  const [imageId,setImageId] = useState(null);
 
   const config = useMemo(
     () => ({
@@ -30,6 +32,29 @@ const Create = ({placeholder}) => {
   } = useForm()  
 
   const navigate = useNavigate();
+
+  const handleFile = async (e) =>{
+    const formData = new FormData();
+    const file = e.target.files[0];
+    formData.append("image",file);
+
+    const res = await fetch(apiUrl + 'temp-images',{
+      method:'POST',
+      headers:{
+        'Accept':'application/json',
+        'Authorization': `Bearer ${token()}`
+      },
+      body:formData
+    }).then(response => response.json())
+    .then(result => {
+          if(result.status == false){
+              toast.error(result.errors.image[0]);
+          }else{
+              setImageId(result.data.id);
+          }
+    })
+
+  }
   
 
 
@@ -127,6 +152,15 @@ const Create = ({placeholder}) => {
                         />
                       </div>
 
+                      <div className="mb-3">
+                      <label htmlFor="" className='form-label'>Image</label>
+                      <input
+                      {
+                        ...register('image')
+                      }
+                       type="file" onChange={handleFile} className='form-control' />
+                    </div>
+
                     <div className="mb-3">
                       <label htmlFor="" className='form-label'>Status</label>
                       <select
@@ -139,7 +173,7 @@ const Create = ({placeholder}) => {
                       </select>
                     </div>
 
-                    <button className="btn btn-primary">Submit</button>
+                    <button disabled={isDisabled} className="btn btn-primary">Submit</button>
 
                   </form>
                 </div>
