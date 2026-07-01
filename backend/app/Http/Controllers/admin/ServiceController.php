@@ -50,6 +50,40 @@ class ServiceController extends Controller
         $model->status = $request->status;
         $model->save();
 
+        if($request->imageId > 0){
+               
+                $tempImage = TempImage::find($request->imageId);
+                if($tempImage != null){
+                    $extArray = explode('.',$tempImage->name);
+                    $ext = last($extArray);
+
+                    $fileName = strtotime('now').$model->id.'.'.$ext;
+
+                    //Create Small Thumbnail Here
+                    $sourcePath = public_path('uploads/temp/'.$tempImage->name);
+                    $desPath = public_path('uploads/services/small/'.$fileName);
+                    $manager = new ImageManager(new Driver());
+                    $image = $manager->read($sourcePath);
+                    $image->cover(300, 300);
+                    $image->toJpeg(90)->save($desPath);
+
+                    //Create Large Thumbnail Here
+                    $sourcePath = public_path('uploads/temp/'.$tempImage->name);
+                    $desPath = public_path('uploads/services/large/'.$fileName);
+                    $manager = new ImageManager(new Driver());
+                    $image = $manager->read($sourcePath);
+                    $image->scale(1200);
+                    $image->toJpeg(90)->save($desPath);
+
+                    $model->image = $fileName;
+                    $model->save();
+
+                   
+
+
+                }
+        }
+
         return response()->json([
             'status'=>true,
             'message'=>'Service addedd successfully'
@@ -119,6 +153,7 @@ class ServiceController extends Controller
         $service->save();
 
         if($request->imageId > 0){
+                $oldImage = $service->image;
                 $tempImage = TempImage::find($request->imageId);
                 if($tempImage != null){
                     $extArray = explode('.',$tempImage->name);
@@ -136,11 +171,20 @@ class ServiceController extends Controller
 
                     //Create Large Thumbnail Here
                     $sourcePath = public_path('uploads/temp/'.$tempImage->name);
-                    $desPath = public_path('uploads/services/small/'.$fileName);
+                    $desPath = public_path('uploads/services/large/'.$fileName);
                     $manager = new ImageManager(new Driver());
                     $image = $manager->read($sourcePath);
                     $image->scale(1200);
                     $image->toJpeg(90)->save($desPath);
+
+                    $service->image = $fileName;
+                    $service->save();
+
+                    if($oldImage != ''){
+                        File::delete(public_path('uploads/services/large/'.$oldImage));
+                        File::delete(public_path('uploads/services/small/'.$oldImage));
+
+                    }
 
 
                 }
