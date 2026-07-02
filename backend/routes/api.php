@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\ServiceController;
 use App\Http\Controllers\admin\TempImageController;
+use App\Http\Controllers\front\ServiceController as FrontServiceController;
 
 
 
@@ -14,6 +15,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('authenticate',[AuthenticationController::class,'authenticate']);
+Route::get('get-services',[FrontServiceController::class,'index']);
 
 Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::get('dashboard',[DashboardController::class,'index']);
@@ -28,5 +30,7 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
 
     //TEMP Image ROUTES
     Route::post('temp-images',[TempImageController::class,'store']);
+
+   
 
 });
