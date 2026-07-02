@@ -13,6 +13,8 @@ import Dashboard from "./components/backend/Dashboard";
 import RequireAuth from "./components/common/RequireAuth";
 import {default as ShowServices } from "./components/backend/services/Show";
 import {default as CreateService }from "./components/backend/services/Create";
+import {default as EditService } from "./components/backend/services/Edit";
+
 
 function App() {
   return (
@@ -29,6 +31,7 @@ function App() {
           <Route path="/admin/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>}/>
           <Route path="/admin/services" element={<RequireAuth><ShowServices /></RequireAuth>}/>
           <Route path="/admin/service/create" element={<RequireAuth><CreateService /></RequireAuth>}/>
+          <Route path="/admin/service/edit/:id" element={<RequireAuth><EditService /></RequireAuth>}/>
         </Routes>
       </BrowserRouter>
       <ToastContainer position="top-center" />
