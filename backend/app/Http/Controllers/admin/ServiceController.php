@@ -30,6 +30,8 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge(['slug'=>Str::slug($request->slug)]);
+
         $validator = Validator::make($request->all(),[
             'title'=>'required',
             'slug'=>'required|unique:services,slug'
@@ -133,6 +135,9 @@ class ServiceController extends Controller
                 'message' => 'Service not found'
             ]);
         }
+
+        $request->merge(['slug'=>Str::slug($request->slug)]);
+        
         $validator = Validator::make($request->all(),[
             'title'=>'required',
             'slug'=>'required|unique:services,slug,'.$id.',id'
