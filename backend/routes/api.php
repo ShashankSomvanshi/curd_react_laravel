@@ -16,6 +16,7 @@ Route::get('/user', function (Request $request) {
 
 Route::post('authenticate',[AuthenticationController::class,'authenticate']);
 Route::get('get-services',[FrontServiceController::class,'index']);
+Route::get('get-latest-services',[FrontServiceController::class,'latestservices']);
 
 Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::get('dashboard',[DashboardController::class,'index']);

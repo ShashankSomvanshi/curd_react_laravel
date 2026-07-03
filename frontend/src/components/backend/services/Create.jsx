@@ -93,7 +93,7 @@ const Create = ({ placeholder }) => {
               <div className="card shadow border-0">
                 <div className="card-body p-4">
                   <div className="d-flex justify-content-between">
-                    <h5>Services/Create</h5>
+                    <h5>Services / Create</h5>
                     <Link to="/admin/services" className="btn btn-primary">
                       Back
                     </Link>
