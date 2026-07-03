@@ -215,6 +215,9 @@ class ServiceController extends Controller
             ]);
         }
 
+        File::delete(public_path('uploads/services/large/'.$project->image));
+        File::delete(public_path('uploads/services/small/'.$project->image));
+
         $service->delete();
 
         return response()->json([

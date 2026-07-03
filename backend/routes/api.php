@@ -33,7 +33,9 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     //Project resource routes
     Route::post('projects',[ProjectController::class,'store']);
     Route::get('projects',[ProjectController::class,'index']);
-
+    Route::put('projects/{id}',[ProjectController::class,'update']);
+    Route::get('projects/{id}',[ProjectController::class,'show']);
+    Route::delete('projects/{id}',[ProjectController::class,'destroy']);
     //TEMP Image ROUTES
     Route::post('temp-images',[TempImageController::class,'store']);
 
