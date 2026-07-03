@@ -201,7 +201,7 @@ class ProjectController extends Controller
        
         return response()->json([
             'status'=>true,
-            'data'=> 'Project Delete Successfully'
+            'message'=> 'Project Delete Successfully'
         ]);
     }
 }

@@ -14,6 +14,8 @@ import RequireAuth from "./components/common/RequireAuth";
 import {default as ShowServices } from "./components/backend/services/Show";
 import {default as CreateService }from "./components/backend/services/Create";
 import {default as EditService } from "./components/backend/services/Edit";
+import {default as ShowProjects } from "./components/backend/projects/Show";
+import {default as CreateProject } from "./components/backend/projects/Create";
 
 
 function App() {
@@ -32,6 +34,8 @@ function App() {
           <Route path="/admin/services" element={<RequireAuth><ShowServices /></RequireAuth>}/>
           <Route path="/admin/service/create" element={<RequireAuth><CreateService /></RequireAuth>}/>
           <Route path="/admin/service/edit/:id" element={<RequireAuth><EditService /></RequireAuth>}/>
+          <Route path="/admin/projects" element={<RequireAuth><ShowProjects/></RequireAuth>} />
+          <Route path="/admin/project/create" element={<RequireAuth><CreateProject /></RequireAuth>}/>
         </Routes>
       </BrowserRouter>
       <ToastContainer position="top-center" />

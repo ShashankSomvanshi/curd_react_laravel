@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Facades\File;
 
 class ServiceController extends Controller
 {
@@ -215,8 +216,8 @@ class ServiceController extends Controller
             ]);
         }
 
-        File::delete(public_path('uploads/services/large/'.$project->image));
-        File::delete(public_path('uploads/services/small/'.$project->image));
+        File::delete(public_path('uploads/services/large/'.$service->image));
+        File::delete(public_path('uploads/services/small/'.$service->image));
 
         $service->delete();
 
