@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\ServiceController;
 use App\Http\Controllers\admin\TempImageController;
 use App\Http\Controllers\front\ServiceController as FrontServiceController;
 use App\Http\Controllers\admin\ProjectController;
+use App\Http\Controllers\front\ProjectController as FrontProjectController;
 
 
 
@@ -18,6 +19,9 @@ Route::get('/user', function (Request $request) {
 Route::post('authenticate',[AuthenticationController::class,'authenticate']);
 Route::get('get-services',[FrontServiceController::class,'index']);
 Route::get('get-latest-services',[FrontServiceController::class,'latestservices']);
+
+Route::get('get-projects',[FrontProjectController::class,'index']);
+Route::get('get-latest-projects',[FrontProjectController::class,'latestprojects']);
 
 Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::get('dashboard',[DashboardController::class,'index']);
@@ -36,9 +40,10 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::put('projects/{id}',[ProjectController::class,'update']);
     Route::get('projects/{id}',[ProjectController::class,'show']);
     Route::delete('projects/{id}',[ProjectController::class,'destroy']);
+
     //TEMP Image ROUTES
     Route::post('temp-images',[TempImageController::class,'store']);
 
-   
+
 
 });

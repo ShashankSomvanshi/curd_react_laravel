@@ -1,41 +1,26 @@
 import React, { useEffect, useState } from "react";
-import Header from "../common/Header";
-import Footer from "../common/Footer";
-import Hero from "../common/Hero";
-import ConstructionImg from "../../assets/images/construction2.jpg";
-import { apiUrl, fileUrl } from "../common/Http";
+import { apiUrl } from "./Http";
+import { fileUrl } from "./Http";
 
-const Projects = () => {
-
-  const[projects,setProjects] = useState([]);
-  const fetchAllLatestProjects = async () => {
-    const res = await fetch(apiUrl + "get-projects", {
+const LatestProjects = () => {
+  const [projects, setProjects] = useState([]);
+  const fetchLatestProjects = async () => {
+    const res = await fetch(apiUrl + "get-latest-projects?limit=4", {
       method: "GET",
     });
     const result = await res.json();
+    console.log(result);
     setProjects(result.data);
   };
 
   useEffect(() => {
-    fetchAllLatestProjects();
+    fetchLatestProjects();
   }, []);
 
   return (
     <>
-      <Header />
-      <main>
-        {/* Hero Section */}
-        <Hero
-          preHeading={"Quality. Integrity. Value."}
-          heading={"Our Projects"}
-          text={
-            "We excel at transforming visions into reality <br/> through outstanding craftsmanship and precise."
-          }
-        />
-      </main>
-      {/* Our Projects */}
       <section className="section-3 bg-light py-5">
-        <div className="container py-5">
+        <div className="container-fluid py-5">
           <div className="section-header text-center">
             <span>our projects</span>
             <h2>Discover our diverse range of projects</h2>
@@ -45,10 +30,10 @@ const Projects = () => {
             </p>
           </div>
           <div className="row pt-4">
-            {
-              projects && projects.map((project) => {
+            {projects &&
+              projects.map((project) => {
                 return (
-                  <div className="col-md-4 col-lg-4" key={`project-${project.id}`}>
+                  <div className="col-md-3 col-lg-3">
                     <div className="item">
                       <div className="service-image">
                         <img
@@ -75,9 +60,8 @@ const Projects = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };
 
-export default Projects;
+export default LatestProjects;
