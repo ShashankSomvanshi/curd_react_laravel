@@ -47,7 +47,7 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::post('articles',[ArticleController::class,'store']);
     Route::put('articles/{id}',[ArticleController::class,'update']);
     Route::delete('articles/{id}',[ArticleController::class,'destroy']);
-    Route::get('articles/{id}',[ProjectController::class,'show']);
+    Route::get('articles/{id}',[ArticleController::class,'show']);
 
     //TEMP Image ROUTES
     Route::post('temp-images',[TempImageController::class,'store']);

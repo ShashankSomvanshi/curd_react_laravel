@@ -160,8 +160,11 @@ class ArticleController extends Controller
 
     //This methid will delete the article
     public function destroy($id){
+        
         $article = Article::find($id);
-        if($article == null){
+        
+
+        if($article === null){
             return reponse()->json([
                 'status'=> false,
                 'message'=>'Article Not found'

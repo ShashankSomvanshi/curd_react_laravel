@@ -17,6 +17,7 @@ import {default as EditService } from "./components/backend/services/Edit";
 import {default as ShowProjects } from "./components/backend/projects/Show";
 import {default as CreateProject } from "./components/backend/projects/Create";
 import {default as EditProject } from "./components/backend/projects/Edit";
+import {default as ShowArticles } from "./components/backend/articles/Show";
 
 
 function App() {
@@ -38,6 +39,9 @@ function App() {
           <Route path="/admin/projects" element={<RequireAuth><ShowProjects/></RequireAuth>} />
           <Route path="/admin/project/create" element={<RequireAuth><CreateProject /></RequireAuth>}/>
           <Route path="/admin/project/edit/:id" element={<RequireAuth><EditProject /></RequireAuth>}/>
+          <Route path="/admin/articles" element={<RequireAuth><ShowArticles/></RequireAuth>} />
+
+          
         </Routes>
       </BrowserRouter>
       <ToastContainer position="top-center" />
