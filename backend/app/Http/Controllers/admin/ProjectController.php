@@ -38,7 +38,7 @@ class ProjectController extends Controller
         if($validate->fails()){
             return response()->json([
                 'status'=> false,
-                'errors'=>$validate->messages(),
+                'errors'=>$validate->errors(),
             ]);
         }
 
@@ -182,7 +182,7 @@ class ProjectController extends Controller
     }
 
     //This method will delete the project
-    public function destroy($id){
+    public function destroy($id){               
         $project = Project::find($id);
 
         if($project == null){

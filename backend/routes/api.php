@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\TempImageController;
 use App\Http\Controllers\front\ServiceController as FrontServiceController;
 use App\Http\Controllers\admin\ProjectController;
 use App\Http\Controllers\front\ProjectController as FrontProjectController;
+use App\Http\Controllers\admin\ArticleController;
 
 
 
@@ -40,6 +41,13 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::put('projects/{id}',[ProjectController::class,'update']);
     Route::get('projects/{id}',[ProjectController::class,'show']);
     Route::delete('projects/{id}',[ProjectController::class,'destroy']);
+
+    //Articles routes
+    Route::get('articles',[ArticleController::class,'index']);
+    Route::post('articles',[ArticleController::class,'store']);
+    Route::put('articles/{id}',[ArticleController::class,'update']);
+    Route::delete('articles/{id}',[ArticleController::class,'destroy']);
+    Route::get('articles/{id}',[ProjectController::class,'show']);
 
     //TEMP Image ROUTES
     Route::post('temp-images',[TempImageController::class,'store']);
